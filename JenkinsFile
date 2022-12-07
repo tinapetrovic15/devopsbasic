@@ -19,15 +19,14 @@ agent any
     stage('Login to Docker Hub') {         
       steps{                            
 	withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'password', usernameVariable: 'username')]) {
-    	sh '''docker login -u="${username}" -p="${password}"
-	sudo docker push tinapetrovic/testrepo:$BUILD_NUMBER'''
+    	sh '''docker login -u="${username}" -p="${password}"'''
 	}                 
 	echo 'Login Completed'                
       }           
     }               
     stage('Push Image to Docker Hub') {         
       steps{                            
-	sh 'sudo docker push tinapetrovic/testrepo:$BUILD_NUMBER'                 
+	sh 'docker push tinapetrovic/testrepo:$BUILD_NUMBER'                 
 	echo 'Push Image Completed'       
       }           
     }       
