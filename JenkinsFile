@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+  stages {         
+    stage("Git Checkout"){           
+      steps{                
+	git url: 'https://github.com/tinapetrovic15/FindingWord.git'                 
+	echo 'Git Checkout Completed'            
+      }        
+    }
+    stage('Build Docker Image') {         
+      steps{                
+            sh 'touch Dockerfile'
+            writeFile file: 'Dockerfile', text: 'FROM ubuntu\n MAINTAINER tina\n RUN apt-get update\n CMD ["echo","Hello Tina"]'
+            sh 'ls'
+            sh 'cat Dockerfile'            
+            sh 'docker build -t tinapetrovic/testrepo:$BUILD_NUMBER .'     
+	        echo 'Build Image Completed'                
+      }           
+    }
+    stage('Login to Docker Hub') {         
+      steps{                            
+	sh 'docker login -u --password-stdin'                 
+	echo 'Login Completed'                
+      }           
+    }               
+    stage('Push Image to Docker Hub') {         
+      steps{                            
+	sh 'sudo docker push tinapetrovic/testrepo:$BUILD_NUMBER'                 
+	echo 'Push Image Completed'       
+      }           
+    }      
+  }     
+}
