@@ -1,0 +1,15 @@
+pipeline {
+  agent any
+  stages {
+    stage("Checkout") {
+    steps {
+      script {
+      	  checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/tinapetrovic15/FindingWord.git']]])
+          sh "ls"
+      }
+      }
+    }
+  }
+
+
+}
