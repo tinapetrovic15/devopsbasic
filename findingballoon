@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+    tools{
+        maven 'mvn_3.8.6'
+    }
+
+
+
+  stages {
+               stage('clone') {
+    
+           steps {
+               script{
+               checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/tinapetrovic15/FindingWord.git']]])
+               }
+}
+            }
+        stage('Trigger') {
+    
+           steps {
+               script{
+               String action = "${action}"
+               if (action == "closed")
+                sh 'cd "./Java module/ProjectJavaFindingWord" && mvn clean install'
+               }
+
+
+
+           }
+        }
+     }
+
+
+
+}
