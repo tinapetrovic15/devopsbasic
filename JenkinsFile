@@ -19,7 +19,7 @@ agent any
     stage('Login to Docker Hub') {         
       steps{                            
 	withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'password', usernameVariable: 'username')]) {
-    	sh 'docker login -u="${username}" -p="${password}"'
+    	sh '''docker login -u="${username}" -p="${password}"'''
 	}                 
 	echo 'Login Completed'                
       }           
