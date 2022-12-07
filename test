@@ -5,7 +5,7 @@ pipeline {
     steps {
       script {
       	  checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/tinapetrovic15/FindingWord.git']]])
-          sh "ls"
+          sh "cat Dockerfile"
       }
       }
     }
